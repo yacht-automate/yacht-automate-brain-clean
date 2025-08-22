@@ -1,0 +1,58 @@
+[
+  {
+    "scenario": "Mediterranean Family Charter",
+    "lead": {
+      "email": "sarah.johnson@email.com",
+      "name": "Sarah Johnson",
+      "notes": "Looking for a luxury yacht in the French Riviera for our family of 6, including 2 teenagers. We want water sports equipment and prefer modern yachts. Budget around €100,000 per week. Dates are flexible in July.",
+      "partySize": 6,
+      "location": "Mediterranean",
+      "dates": "July 15-22, 2024",
+      "budget": 100000
+    },
+    "expectedMatches": ["SERENITY", "OCEAN PEARL"],
+    "testCriteria": "Should match Mediterranean yachts under budget with water toys"
+  },
+  {
+    "scenario": "Caribbean Corporate Event", 
+    "lead": {
+      "email": "events@techcorp.com",
+      "name": "Michael Chen",
+      "notes": "Corporate retreat for 20 executives in the Caribbean. Need professional catering capabilities and conference facilities. Budget is flexible up to $200k per week.",
+      "partySize": 20,
+      "location": "Caribbean",
+      "dates": "March 2024",
+      "budget": 200000
+    },
+    "expectedMatches": [],
+    "testCriteria": "Should find no matches due to guest capacity limits (max 12 guests)"
+  },
+  {
+    "scenario": "Bahamas Weekend Getaway",
+    "lead": {
+      "email": "party@weekend.com",
+      "name": "Jessica Miller", 
+      "notes": "Weekend party yacht in Bahamas for 8 friends. Looking for fun atmosphere with good music system and outdoor spaces for entertaining.",
+      "partySize": 8,
+      "location": "Bahamas",
+      "dates": "Memorial Day weekend",
+      "budget": 75000
+    },
+    "expectedMatches": ["BAHAMA BREEZE"],
+    "testCriteria": "Should match Bahamas yacht within budget and guest capacity"
+  },
+  {
+    "scenario": "Luxury Mediterranean Charter",
+    "lead": {
+      "email": "luxury@vip.com",
+      "name": "Robert Sterling",
+      "notes": "Ultra-luxury charter for 10 VIP guests in Mediterranean. Need helicopter pad, spa facilities, and premium amenities. Budget unlimited.",
+      "partySize": 10,
+      "location": "Mediterranean", 
+      "dates": "August 2024",
+      "budget": 300000
+    },
+    "expectedMatches": ["AZURE ESCAPE", "SERENITY"],
+    "testCriteria": "Should prioritize newest yacht with premium amenities"
+  }
+]

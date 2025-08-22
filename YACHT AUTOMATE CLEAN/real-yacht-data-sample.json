@@ -1,0 +1,79 @@
+{
+  "yachtData": [
+    {
+      "name": "SERENITY",
+      "builder": "Sunseeker",
+      "length": "88",
+      "guests": "12",
+      "cabins": "5",
+      "crew": "6",
+      "yearBuilt": "2019",
+      "weeklyRate": "125000",
+      "currency": "EUR",
+      "area": "Mediterranean",
+      "type": "Motor Yacht",
+      "description": "Luxurious 88ft Sunseeker with modern amenities and spacious outdoor areas",
+      "features": ["Beach Club", "Jacuzzi", "Water Toys", "WiFi", "Gym"]
+    },
+    {
+      "name": "OCEAN PEARL",
+      "builder": "Ferretti",
+      "length": "76",
+      "guests": "10",
+      "cabins": "4",
+      "crew": "5",
+      "yearBuilt": "2020",
+      "weeklyRate": "95000",
+      "currency": "EUR",
+      "area": "Mediterranean",
+      "type": "Motor Yacht",
+      "description": "Contemporary Ferretti yacht with elegant interiors and excellent performance",
+      "features": ["Flybridge", "Beach Club", "Water Toys", "Air Conditioning"]
+    },
+    {
+      "name": "CARIBBEAN DREAM",
+      "builder": "Lagoon",
+      "length": "65",
+      "guests": "8",
+      "cabins": "4",
+      "crew": "3",
+      "yearBuilt": "2021",
+      "weeklyRate": "45000",
+      "currency": "USD",
+      "area": "Caribbean",
+      "type": "Catamaran",
+      "description": "Modern catamaran perfect for Caribbean island hopping with shallow draft",
+      "features": ["Shallow Draft", "Large Deck Space", "Snorkel Gear", "Kayaks"]
+    },
+    {
+      "name": "BAHAMA BREEZE",
+      "builder": "Azimut",
+      "length": "70",
+      "guests": "8",
+      "cabins": "4",
+      "crew": "4",
+      "yearBuilt": "2018",
+      "weeklyRate": "55000",
+      "currency": "USD",
+      "area": "Bahamas",
+      "type": "Motor Yacht",
+      "description": "Stylish Azimut yacht ideal for Bahamas adventures with excellent fishing setup",
+      "features": ["Fishing Equipment", "Water Toys", "Outdoor Bar", "Sun Pads"]
+    },
+    {
+      "name": "AZURE ESCAPE",
+      "builder": "Princess",
+      "length": "95",
+      "guests": "12",
+      "cabins": "6",
+      "crew": "7",
+      "yearBuilt": "2022",
+      "weeklyRate": "145000",
+      "currency": "EUR",
+      "area": "Mediterranean",
+      "type": "Motor Yacht",
+      "description": "Brand new Princess yacht with cutting-edge technology and luxurious amenities",
+      "features": ["Helicopter Pad", "Cinema", "Spa", "Gym", "Beach Club"]
+    }
+  ]
+}

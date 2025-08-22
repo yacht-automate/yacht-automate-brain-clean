@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yacht Charter Automation Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c5aa0;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        button {
+            background: #2c5aa0;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+        button:hover {
+            background: #1a4080;
+        }
+        .demo-info {
+            background: #e8f4f8;
+            padding: 20px;
+            border-left: 4px solid #2c5aa0;
+            margin-bottom: 30px;
+            border-radius: 5px;
+        }
+        .results {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 5px;
+            display: none;
+        }
+        .yacht-card {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        .yacht-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c5aa0;
+            margin-bottom: 10px;
+        }
+        .yacht-details {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .yacht-price {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2c5aa0;
+        }
+        .loading {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+        }
+        .api-url {
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 3px;
+            font-family: monospace;
+            word-break: break-all;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛥️ Yacht Charter Automation Demo</h1>
+        
+        <div class="demo-info">
+            <h3>Live Demo System</h3>
+            <p><strong>API Endpoint:</strong></p>
+            <div class="api-url">https://ee7a4fef-0f74-462a-aad3-47e18486837e-00-q8l8bnn3uavd.picard.replit.dev</div>
+            <p>This form demonstrates how your customers would submit yacht charter inquiries. The system processes requests in real-time and matches yachts from your inventory.</p>
+        </div>
+
+        <form id="charter-form">
+            <div class="form-group">
+                <label for="name">Your Name *</label>
+                <input type="text" id="name" name="name" required placeholder="Enter your full name">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" name="email" required placeholder="your@email.com">
+            </div>
+
+            <div class="form-group">
+                <label for="guests">Number of Guests *</label>
+                <input type="number" id="guests" name="guests" min="1" max="20" required placeholder="8">
+            </div>
+
+            <div class="form-group">
+                <label for="location">Charter Location *</label>
+                <select id="location" name="location" required>
+                    <option value="">Select a location</option>
+                    <option value="Mediterranean">Mediterranean</option>
+                    <option value="Caribbean">Caribbean</option>
+                    <option value="Bahamas">Bahamas</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="budget">Weekly Budget (EUR/USD) *</label>
+                <input type="number" id="budget" name="budget" min="10000" placeholder="120000">
+            </div>
+
+            <div class="form-group">
+                <label for="dates">Preferred Dates</label>
+                <input type="text" id="dates" name="dates" placeholder="July 2024, flexible">
+            </div>
+
+            <div class="form-group">
+                <label for="notes">Tell us about your ideal charter</label>
+                <textarea id="notes" name="notes" placeholder="Looking for luxury yacht with water sports equipment, modern amenities, and spacious outdoor areas..."></textarea>
+            </div>
+
+            <button type="submit">Find Perfect Yachts</button>
+        </form>
+
+        <div id="results" class="results">
+            <h3>🎯 Yacht Matching Results</h3>
+            <div id="results-content"></div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('charter-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = {
+                email: formData.get('email'),
+                name: formData.get('name'),
+                notes: `Looking for ${formData.get('location')} yacht charter for ${formData.get('guests')} guests. Budget: ${formData.get('budget')}. Dates: ${formData.get('dates')}. ${formData.get('notes')}`,
+                partySize: parseInt(formData.get('guests')),
+                location: formData.get('location'),
+                budget: parseInt(formData.get('budget')) || null,
+                dates: formData.get('dates')
+            };
+
+            const resultsDiv = document.getElementById('results');
+            const resultsContent = document.getElementById('results-content');
+            
+            resultsDiv.style.display = 'block';
+            resultsContent.innerHTML = '<div class="loading">🔄 Processing your yacht charter request...</div>';
+
+            try {
+                const response = await fetch('https://ee7a4fef-0f74-462a-aad3-47e18486837e-00-q8l8bnn3uavd.picard.replit.dev/lead', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Tenant-Id': 'demo-live'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    let html = `
+                        <div style="background: #e8f5e8; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+                            <strong>✅ Success!</strong> Found ${result.matchCount} yacht matches in ${response.headers.get('x-response-time') || 'under 1 second'}<br>
+                            <strong>Lead ID:</strong> ${result.lead.id}
+                        </div>
+                    `;
+
+                    if (result.candidates && result.candidates.length > 0) {
+                        html += '<h4>🛥️ Recommended Yachts:</h4>';
+                        result.candidates.slice(0, 5).forEach(yacht => {
+                            html += `
+                                <div class="yacht-card">
+                                    <div class="yacht-name">${yacht.name}</div>
+                                    <div class="yacht-details">
+                                        <strong>Builder:</strong> ${yacht.builder} | 
+                                        <strong>Length:</strong> ${yacht.length}m | 
+                                        <strong>Guests:</strong> ${yacht.guests} | 
+                                        <strong>Type:</strong> ${yacht.type}
+                                    </div>
+                                    <div class="yacht-price">Weekly Charter: ${yacht.currency} ${yacht.weeklyRate.toLocaleString()}</div>
+                                </div>
+                            `;
+                        });
+                        
+                        html += `
+                            <div style="background: #fff3cd; padding: 15px; border-radius: 5px; margin-top: 20px;">
+                                <strong>📧 What happens next:</strong><br>
+                                • Professional email sent to customer with yacht details and quotes<br>
+                                • APA and VAT calculations included automatically<br>
+                                • Charter specialist contact information provided<br>
+                                • Lead logged in CRM for follow-up
+                            </div>
+                        `;
+                    }
+
+                    resultsContent.innerHTML = html;
+                } else {
+                    resultsContent.innerHTML = `
+                        <div style="background: #f8d7da; padding: 15px; border-radius: 5px; color: #721c24;">
+                            <strong>Error:</strong> ${result.error || 'Unable to process request'}
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultsContent.innerHTML = `
+                    <div style="background: #f8d7da; padding: 15px; border-radius: 5px; color: #721c24;">
+                        <strong>Connection Error:</strong> Unable to reach automation system.<br>
+                        <small>In production, this would be seamlessly integrated with your website.</small>
+                    </div>
+                `;
+            }
+        });
+
+        // Pre-fill form with demo data
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('name').value = 'Sarah Johnson';
+            document.getElementById('email').value = 'sarah.johnson@demo.com';
+            document.getElementById('guests').value = '8';
+            document.getElementById('location').value = 'Mediterranean';
+            document.getElementById('budget').value = '120000';
+            document.getElementById('dates').value = 'July 2024';
+            document.getElementById('notes').value = 'Looking for luxury motor yacht with water sports equipment, spacious deck areas, and modern amenities for family vacation.';
+        });
+    </script>
+</body>
+</html>
