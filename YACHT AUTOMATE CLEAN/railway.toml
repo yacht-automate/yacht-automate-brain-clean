@@ -1,6 +1,9 @@
 [build]
 builder = "NIXPACKS"
 
+[build.env]
+NODE_VERSION = "20"
+
 [deploy]
 startCommand = "npx ts-node src/index.ts"
 restartPolicyType = "ON_FAILURE"
